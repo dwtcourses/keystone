@@ -1,10 +1,9 @@
 /** @jsx jsx */
 
-import { useQuery } from '@apollo/react-hooks';
 import getConfig from 'next/config';
 import { jsx } from '@emotion/core';
 
-import { Avatar, Container, Error, H1, H2, H3, Html, Loading } from '../primitives';
+import { Avatar, Container, H1, H2, H3, Html } from '../primitives';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Meta from '../components/Meta';
@@ -17,7 +16,6 @@ const { publicRuntimeConfig } = getConfig();
 
 export default function About({ organiserData }) {
   const { meetup } = publicRuntimeConfig;
-
 
   const hasOrganisers = Boolean(organiserData && organiserData.length);
   const allOrganisers = organiserData.filter(o => o.user).map(o => o.user);

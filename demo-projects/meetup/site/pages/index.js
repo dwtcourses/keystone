@@ -35,6 +35,7 @@ import {
   pluralLabel,
 } from '../helpers';
 import { mq } from '../helpers/media';
+import { initApolloClient } from '../lib/apollo';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -262,14 +263,8 @@ function processEventsData(data) {
   };
 }
 
-const Home = ({ now }) => {
+const Home = ({ eventsData }) => {
   const { meetup } = publicRuntimeConfig;
-
-  const {
-    data: eventsData = {},
-    loading: eventsLoading,
-    error: eventsError,
-  } = useQuery(GET_CURRENT_EVENTS, { variables: { now } });
 
   const { featuredEvent, moreEvents } = processEventsData(eventsData);
 
@@ -280,7 +275,7 @@ const Home = ({ now }) => {
       <Hero title={meetup.name}>
         <Html markup={meetup.homeIntro} />
       </Hero>
-      <FeaturedEvent isLoading={eventsLoading} error={eventsError} event={featuredEvent} />
+      <FeaturedEvent event={featuredEvent} />
       <Container css={{ marginTop: '3rem' }}>
         {featuredEvent && featuredEvent.talks ? <Talks talks={featuredEvent.talks} /> : null}
       </Container>
@@ -328,9 +323,16 @@ const Home = ({ now }) => {
   );
 };
 
-Home.getInitialProps = async () => ({
-  now: new Date().toISOString(),
-});
+export async function getStaticProps() {
+  const apolloClient = initApolloClient();
+
+  const { data: eventsData } = await apolloClient.query({
+    query: GET_CURRENT_EVENTS,
+    variables: { now: new Date().toISOString() },
+  });
+
+  return { props: { eventsData } };
+}
 
 export default Home;
 

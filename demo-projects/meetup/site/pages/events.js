@@ -13,7 +13,6 @@ import { GET_ALL_EVENTS } from '../graphql/events';
 import { initApolloClient } from '../lib/apollo';
 
 export default function Events({ allEvents }) {
-
   return (
     <>
       <Meta title="Events" />
