@@ -11,15 +11,13 @@ import Meta from '../components/Meta';
 import { colors, gridSize } from '../theme';
 import { GET_ORGANISERS } from '../graphql/organisers';
 import { mq } from '../helpers/media';
+import { initApolloClient } from '../lib/apollo';
 
 const { publicRuntimeConfig } = getConfig();
 
-export default function About() {
+export default function About({ organiserData }) {
   const { meetup } = publicRuntimeConfig;
 
-  const { data: { allOrganisers: organiserData = [] } = {}, loading, error } = useQuery(
-    GET_ORGANISERS
-  );
 
   const hasOrganisers = Boolean(organiserData && organiserData.length);
   const allOrganisers = organiserData.filter(o => o.user).map(o => o.user);
@@ -37,11 +35,7 @@ export default function About() {
             <Html markup={meetup.aboutIntro} />
           </Content>
         )}
-        {loading ? (
-          <Loading />
-        ) : error ? (
-          <Error error={error} />
-        ) : hasOrganisers ? (
+        {hasOrganisers && (
           <OrganiserList
             title={
               <H3 size={5} css={{ marginBottom: '0.66em' }}>
@@ -53,7 +47,7 @@ export default function About() {
               return <Organiser key={organiser.id} organiser={organiser} />;
             })}
           </OrganiserList>
-        ) : null}
+        )}
 
         {meetup.codeOfConduct ? (
           <Content>
@@ -121,3 +115,13 @@ const Organiser = ({ organiser }) => (
   </li>
 );
 const Content = props => <div css={{ maxWidth: 720 }} {...props} />;
+
+export async function getStaticProps() {
+  const apolloClient = initApolloClient();
+
+  const { data = {} } = await apolloClient.query({ query: GET_ORGANISERS });
+
+  return {
+    props: { organiserData: data.allOrganisers },
+  };
+}
