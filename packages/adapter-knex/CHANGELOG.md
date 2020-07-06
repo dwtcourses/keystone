@@ -1,5 +1,19 @@
 # @keystonejs/adapter-knex
 
+## 11.0.0
+
+### Major Changes
+
+- [`c9ca62876`](https://github.com/keystonejs/keystone/commit/c9ca628765f1ecb599c8556de2d31567ddf12504) [#3223](https://github.com/keystonejs/keystone/pull/3223) Thanks [@timleslie](https://github.com/timleslie)! - Adapters must now be explicitly configured with a connection string. A default based on the project name is no longer used. See the docs for [`adapter-knex`](/packages/adapter-knex/README.md) and [`adapter-mongoose`](/packages/adapter-mongoose/README.md).
+
+### Patch Changes
+
+- [`51c898537`](https://github.com/keystonejs/keystone/commit/51c898537c7fdc8578fa47eade6a499594b0d154) [#3225](https://github.com/keystonejs/keystone/pull/3225) Thanks [@BikramjeetSingh](https://github.com/BikramjeetSingh)! - Fix bug where fields that contain underscores cause runtime error in Knex Adapter
+
+- Updated dependencies [[`8480f889a`](https://github.com/keystonejs/keystone/commit/8480f889a492d83ee805f19877d49fd112117939), [`49984caae`](https://github.com/keystonejs/keystone/commit/49984caaec803ed86b027c9634ac6b3f671e9ba7), [`02f069f0b`](https://github.com/keystonejs/keystone/commit/02f069f0b6e28ccfe6d5cdeb59ab01bde27a655e), [`5fc97cbf4`](https://github.com/keystonejs/keystone/commit/5fc97cbf4489587a3a8cb38c04ba81fc2cb1fc5a), [`56e1798d6`](https://github.com/keystonejs/keystone/commit/56e1798d6815723cfba01e6d7dc6b4fe73d4447b), [`81b4df318`](https://github.com/keystonejs/keystone/commit/81b4df3182fc63c583e3fae5c05c528b678cab95), [`3ce644d5f`](https://github.com/keystonejs/keystone/commit/3ce644d5f2b6e674adb2f155c0e729536079347a)]:
+  - @keystonejs/keystone@12.0.0
+  - @keystonejs/fields-auto-increment@5.1.11
+
 ## 10.1.0
 
 ### Minor Changes
